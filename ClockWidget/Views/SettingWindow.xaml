@@ -1,0 +1,93 @@
+﻿<mah:MetroWindow x:Class="ClockWidget.Views.SettingWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:converters="clr-namespace:ClockWidget.Views.Controls.Converters"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:local="clr-namespace:ClockWidget.Views"
+                 xmlns:localControls="clr-namespace:ClockWidget.Views.Controls"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:prism="http://prismlibrary.com/"
+                 Title="設定"
+                 Width="600"
+                 MinHeight="250"
+                 ResizeMode="NoResize"
+                 ShowInTaskbar="False"
+                 ShowMaxRestoreButton="False"
+                 ShowMinButton="False"
+                 SizeToContent="Height"
+                 mc:Ignorable="d">
+    <mah:MetroWindow.Resources>
+        <converters:BooleanNagationConverter x:Key="BooleanNagationConverter" />
+    </mah:MetroWindow.Resources>
+    <Grid>
+        <StackPanel Margin="5"
+                    Orientation="Vertical">
+            <localControls:HeadlinedCard Header="一般"
+                                         Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical">
+                        <localControls:FieldRow Label="スタンドアロン">
+                            <ToggleButton HorizontalAlignment="Right"
+                                          IsChecked="{Binding StandAlone}" />
+                        </localControls:FieldRow>
+                        <TextBlock Margin="15 0 0 0"
+                                   FontSize="{StaticResource MahApps.Font.Size.Tooltip}">
+                            スタンドアロンモードではネットワーク通信を行いません<LineBreak />
+                            休日・天気の最新データ取得をしないため、天気が非表示になります</TextBlock>
+                    </StackPanel>
+                    <Separator Margin="0 5 0 10" />
+                    <localControls:FieldRow Label="サイズ">
+                        <localControls:NumericUpDown Max="2000"
+                                                     Min="100"
+                                                     Value="{Binding Size}" />
+                    </localControls:FieldRow>
+                    <localControls:FieldRow Label="常に最前面">
+                        <ToggleButton HorizontalAlignment="Right"
+                                      IsChecked="{Binding Topmost}" />
+                    </localControls:FieldRow>
+                    <localControls:FieldRow Label="日付表示">
+                        <ToggleButton HorizontalAlignment="Right"
+                                      IsChecked="{Binding ShowDate}" />
+                    </localControls:FieldRow>
+                    <localControls:FieldRow IsEnabled="{Binding StandAlone, Converter={StaticResource BooleanNagationConverter}}"
+                                            Label="天気表示">
+                        <ToggleButton HorizontalAlignment="Right"
+                                      IsChecked="{Binding ShowWeather}" />
+                    </localControls:FieldRow>
+                </StackPanel>
+            </localControls:HeadlinedCard>
+            <localControls:HeadlinedCard Header="色"
+                                         Margin="5">
+                <StackPanel>
+                    <localControls:FieldRow Label="文字盤">
+                        <localControls:ColorSelectionControl DefaultColor="{Binding DefaultSetting.ClockFaceColor}"
+                                                             SelectedColor="{Binding ClockFaceColor}" />
+                    </localControls:FieldRow>
+                    <localControls:FieldRow Label="時針">
+                        <localControls:ColorSelectionControl DefaultColor="{Binding DefaultSetting.HourHandColor}"
+                                                             SelectedColor="{Binding HourHandColor}" />
+                    </localControls:FieldRow>
+                    <localControls:FieldRow Label="分針">
+                        <localControls:ColorSelectionControl DefaultColor="{Binding DefaultSetting.MinuteHandColor}"
+                                                             SelectedColor="{Binding MinuteHandColor}" />
+                    </localControls:FieldRow>
+                    <localControls:FieldRow Label="秒針">
+                        <localControls:ColorSelectionControl DefaultColor="{Binding DefaultSetting.SecondHandColor}"
+                                                             SelectedColor="{Binding SecondHandColor}" />
+                    </localControls:FieldRow>
+                    <localControls:FieldRow Label="日付・天気">
+                        <localControls:ColorSelectionControl DefaultColor="{Binding DefaultSetting.DateColor}"
+                                                             SelectedColor="{Binding DateColor}" />
+                    </localControls:FieldRow>
+                </StackPanel>
+            </localControls:HeadlinedCard>
+            <Separator Margin="5" />
+            <localControls:SubmitButtonControl Margin="5"
+                                               CancelButtonClick="{Binding CancelButtonClickCommand}"
+                                               DefaultButtonClick="{Binding DefaultButtonClickCommand}"
+                                               OkButtonClick="{Binding OkButtonClickCommand}" />
+        </StackPanel>
+    </Grid>
+</mah:MetroWindow>
